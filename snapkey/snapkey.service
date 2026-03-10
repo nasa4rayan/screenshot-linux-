@@ -5,7 +5,7 @@ Wants=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/share/snapkey/snapkey-daemon
+ExecStart=/usr/bin/env python3 %h/.local/share/snapkey/src/daemon.py
 Restart=on-failure
 RestartSec=2
 

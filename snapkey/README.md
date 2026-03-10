@@ -44,6 +44,7 @@ At a high level, SnapKey is organized into a few cooperating pieces:
 From the project root:
 
 ```bash
+cd snapkey
 chmod +x install.sh
 ./install.sh
 ```
@@ -77,12 +78,20 @@ SnapKey stores generated media in user-friendly defaults:
 
 Directories are created automatically when first needed.
 
-## Screenshots (placeholders)
+## Screenshots
 
-> Add product screenshots here when available.
+Current implementation is terminal/background-first and relies on your desktop
+notifications (`notify-send`) for status feedback. There is no dedicated GUI
+panel yet.
 
-- Overlay selection UI: _TODO_
-- Recording control panel: _TODO_
+- Region capture: uses native capture backend (`grim`/`maim`/`scrot`).
+- Recording toggle: start/stop status is reported via desktop notifications.
+
+## Current limitations
+
+- GIF capture shortcut is wired, but GIF generation is not yet implemented.
+- GNOME/KDE manual keybinding setup is still required when compositor-level
+  CLI binding APIs are unavailable.
 
 ## Troubleshooting by desktop environment / WM
 

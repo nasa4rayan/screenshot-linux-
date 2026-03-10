@@ -151,11 +151,14 @@ validate_dependencies() {
 install_snapkey_files() {
   mkdir -p "$INSTALL_DIR"
 
+  cp -a "$SCRIPT_DIR/src" "$INSTALL_DIR/"
+
   while IFS= read -r file; do
     cp -f "$file" "$INSTALL_DIR/"
-  done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f ! -name "install.sh" ! -name "$SERVICE_NAME")
+  done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f ! -name "install.sh" ! -name "$SERVICE_NAME" ! -name "README.md")
 
   chmod -R u+rwX "$INSTALL_DIR"
+  chmod u+rx "$INSTALL_DIR/src/daemon.py"
   log "Installed SnapKey files to $INSTALL_DIR"
 }
 
