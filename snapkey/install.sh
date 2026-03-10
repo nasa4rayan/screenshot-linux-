@@ -7,6 +7,7 @@ SYSTEMD_USER_DIR="${HOME}/.config/systemd/user"
 SERVICE_NAME="snapkey.service"
 SERVICE_SRC="${SCRIPT_DIR}/${SERVICE_NAME}"
 SERVICE_DEST="${SYSTEMD_USER_DIR}/${SERVICE_NAME}"
+DAEMON_ENTRY="${INSTALL_DIR}/src/daemon.py"
 
 REQUIRED_BINS=(
   grim
@@ -151,11 +152,14 @@ validate_dependencies() {
 install_snapkey_files() {
   mkdir -p "$INSTALL_DIR"
 
+  cp -a "$SCRIPT_DIR/src" "$INSTALL_DIR/"
+
   while IFS= read -r file; do
     cp -f "$file" "$INSTALL_DIR/"
-  done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f ! -name "install.sh" ! -name "$SERVICE_NAME")
+  done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f ! -name "install.sh" ! -name "$SERVICE_NAME" ! -name "README.md")
 
   chmod -R u+rwX "$INSTALL_DIR"
+  chmod u+rx "$DAEMON_ENTRY"
   log "Installed SnapKey files to $INSTALL_DIR"
 }
 
@@ -167,7 +171,7 @@ install_service_file() {
     return 1
   fi
 
-  cp -f "$SERVICE_SRC" "$SERVICE_DEST"
+  sed "s|__SNAPKEY_DAEMON__|${DAEMON_ENTRY}|g" "$SERVICE_SRC" > "$SERVICE_DEST"
   log "Installed user systemd unit to $SERVICE_DEST"
 }
 
