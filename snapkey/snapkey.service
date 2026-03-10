@@ -1,0 +1,13 @@
+[Unit]
+Description=SnapKey daemon
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/share/snapkey/snapkey-daemon
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
