@@ -151,7 +151,8 @@ validate_dependencies() {
 install_snapkey_files() {
   mkdir -p "$INSTALL_DIR"
 
-  cp -a "$SCRIPT_DIR/src" "$INSTALL_DIR/"
+  mkdir -p "$INSTALL_DIR/src"
+  cp -a "$SCRIPT_DIR/src/." "$INSTALL_DIR/src/"
 
   while IFS= read -r file; do
     cp -f "$file" "$INSTALL_DIR/"

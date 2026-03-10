@@ -7,14 +7,20 @@ low-level key grabbing is intentionally restricted.
 from __future__ import annotations
 
 import os
+import shlex
 import shutil
 import signal
 import subprocess
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable
 
 ActionCallback = Callable[[str], None]
-CONTROL_CMD = "python3 -m snapkey.src.daemon --command"
+DAEMON_CMD = os.environ.get("SNAPKEY_DAEMON_CMD")
+if DAEMON_CMD:
+    CONTROL_CMD = DAEMON_CMD
+else:
+    CONTROL_CMD = f"python3 {shlex.quote(str(Path(__file__).with_name('daemon.py')))} --command"
 
 
 @dataclass(frozen=True)
